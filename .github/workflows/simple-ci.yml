@@ -100,7 +100,7 @@ jobs:
         uses: green-coding-berlin/eco-ci-energy-estimation@v5
         with:
           task: get-measurement
-          label: 'schirtt 5'
+          label: 'repo checkout'
 
   deploy:
     name: Deploy Job
