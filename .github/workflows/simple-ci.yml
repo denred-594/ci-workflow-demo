@@ -96,12 +96,6 @@ jobs:
       - name: Run tests
         run: npm run test
 
-      - name: Eco-CI Measurement (5)
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: get-measurement
-          label: 'repo checkout'
-
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
