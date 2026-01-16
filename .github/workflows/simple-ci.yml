@@ -18,8 +18,19 @@ jobs:
     name: Build Job
     runs-on: ubuntu-latest
     steps:
+    - name: Eco-CI Initialization
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: start-measurement
+          
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Eco-CI Measurement (1)
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: get-measurement
+          label: 'repo checkout'
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -34,11 +45,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Eco-CI Measurement (2)
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: get-measurement
+          label: 'node setup'
+
       - name: Install dependencies
         run: npm install
 
+      - name: Eco-CI Measurement (3)
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: get-measurement
+          label: 'npm install'
+
       - name: Build
         run: npm run build
+
+      - name: Eco-CI Measurement (4)
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: get-measurement
+          label: 'npm build'
+
+      - name: Eco-CI Results
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: display-results
 
   test:
     name: Test Job
