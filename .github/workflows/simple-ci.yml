@@ -19,60 +19,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Eco-CI Initialization
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: start-measurement
+      uses: green-coding-berlin/eco-ci-energy-estimation@v5
+      with:
+        task: start-measurement
           
-      - name: Checkout code
-        uses: actions/checkout@v6
+    - name: Checkout code
+      uses: actions/checkout@v6
 
-      - name: Eco-CI Measurement (1)
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: get-measurement
-          label: 'repo checkout'
+    - name: Eco-CI Measurement (1)
+      uses: green-coding-berlin/eco-ci-energy-estimation@v5
+      with:
+        task: get-measurement
+        label: 'repo checkout'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ env.NODE_VERSION }}
 
-      - name: Cache node modules
-        uses: actions/cache@v5
-        with:
-          path: '~/.npm'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+    - name: Cache node modules
+      uses: actions/cache@v5
+      with:
+        path: '~/.npm'
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
-      - name: Eco-CI Measurement (2)
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: get-measurement
-          label: 'node setup'
+    - name: Eco-CI Measurement (2)
+      uses: green-coding-berlin/eco-ci-energy-estimation@v5
+      with:
+        task: get-measurement
+        label: 'node setup'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Eco-CI Measurement (3)
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: get-measurement
-          label: 'npm install'
+    - name: Eco-CI Measurement (3)
+      uses: green-coding-berlin/eco-ci-energy-estimation@v5
+      with:
+        task: get-measurement
+        label: 'npm install'
 
-      - name: Build
-        run: npm run build
+    - name: Build
+      run: npm run build
 
-      - name: Eco-CI Measurement (4)
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: get-measurement
-          label: 'npm build'
-
-      - name: Eco-CI Results
-        uses: green-coding-berlin/eco-ci-energy-estimation@v5
-        with:
-          task: display-results
+    - name: Eco-CI Measurement (4)
+      uses: green-coding-berlin/eco-ci-energy-estimation@v5
+      with:
+        task: get-measurement
+        label: 'npm build'
 
   test:
     name: Test Job
@@ -101,6 +96,12 @@ jobs:
       - name: Run tests
         run: npm run test
 
+      - name: Eco-CI Measurement (5)
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: get-measurement
+          label: 'test'
+
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
@@ -127,3 +128,14 @@ jobs:
 
       - name: Deploy
         run: npm run deploy
+
+      - name: Eco-CI Measurement (5)
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: get-measurement
+          label: 'deploy'
+
+      - name: Eco-CI Results
+        uses: green-coding-berlin/eco-ci-energy-estimation@v5
+        with:
+          task: display-results
